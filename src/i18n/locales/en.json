@@ -1,0 +1,210 @@
+{
+  "app": {
+    "title": "Ember",
+    "settings": "What you use",
+    "preview": "Preview mode: your log is saved in this browser only."
+  },
+  "load": {
+    "loading": "Reading your day…",
+    "failed": "Couldn't read your saved log. Nothing will be written until it can be read.",
+    "unreadable": "Your saved log is in a format this version can't read. It is kept as it is, and nothing will be written over it.",
+    "retry": "Try again"
+  },
+  "save": {
+    "failed": "Last change not saved: {{reason}}",
+    "full": "Your log is full (256 KB). That change was not kept."
+  },
+  "substance": {
+    "cigarette": "Cigarette",
+    "vape": "Vape",
+    "joint": "Joint"
+  },
+  "setup": {
+    "title": "What do you use?",
+    "hint": "Pick one or more. You can change this later.",
+    "start": "Start",
+    "done": "Done"
+  },
+  "today": {
+    "since": "since your last one",
+    "never": "Nothing logged yet",
+    "neverHint": "Tap below when you have one.",
+    "label": "today",
+    "vsYesterday": "{{n}} by this time yesterday",
+    "passedOne": "1 craving passed",
+    "passedMany": "{{n}} cravings passed",
+    "stretch": "Longest stretch this week",
+    "stretchOngoing": "{{d}}, still going"
+  },
+  "action": {
+    "log": "I'm having one",
+    "craving": "Craving?",
+    "cravingSub": "Ride it out"
+  },
+  "log": {
+    "which": "Which one?",
+    "cancel": "Cancel"
+  },
+  "undo": {
+    "logged": "{{what}} logged at {{time}}",
+    "passed": "Craving passed at {{time}}",
+    "action": "Undo"
+  },
+  "week": {
+    "title": "Last 7 days",
+    "down": "{{n}} fewer than the 7 days before",
+    "up": "{{n}} more than the 7 days before",
+    "same": "Same as the 7 days before",
+    "absent": "Not tracked yet",
+    "passed": "cravings passed"
+  },
+  "history": {
+    "title": "Today",
+    "empty": "Nothing logged today.",
+    "use": "{{what}}",
+    "passed": "Craving passed",
+    "remove": "Remove",
+    "passedBy": "Craving passed · {{how}}"
+  },
+  "virtual": {
+    "choose": "Pick your ritual",
+    "hold": "Hold to draw in",
+    "keyHint": "or hold the space bar",
+    "inhale": "Draw in, slowly…",
+    "exhale": "Now breathe out, slowly…",
+    "short": "Hold a little longer",
+    "puff": "Puff {{n}} of {{total}}",
+    "done": "I'm good now",
+    "close": "Close",
+    "finished": "Craving passed.",
+    "finishedSub": "Logged at {{time}}.",
+    "back": "Back to my day"
+  },
+  "dur": {
+    "underMinute": "< 1 min",
+    "minutes": "{{m}} min",
+    "hm": "{{h}} h {{m}} min",
+    "dh": "{{d}} d {{h}} h"
+  },
+  "offer": {
+    "question": "Ride it out first?",
+    "yes": "Show me",
+    "no": "No, log it"
+  },
+  "ride": {
+    "title": "Ride it out",
+    "for": "Craving for",
+    "virtual": "Virtual one",
+    "virtualSub": "Hold to draw, breathe out",
+    "other": "Something else",
+    "usual": "Your usual"
+  },
+  "method": {
+    "breathing": "Box breathing",
+    "breathingSub": "In 4, hold 4, out 4, hold 4",
+    "pushups": "Push-ups",
+    "pushupsSub": "Pick a number, count them",
+    "squats": "Squats",
+    "squatsSub": "Pick a number, count them",
+    "stretching": "Stretching",
+    "stretchingSub": "Five stretches, 30 s each",
+    "walk": "A short walk",
+    "walkSub": "Five minutes, then come back",
+    "water": "A glass of water",
+    "waterSub": "Drink it slowly",
+    "virtual": "Virtual one"
+  },
+  "breath": {
+    "in": "Breathe in",
+    "holdIn": "Hold",
+    "out": "Breathe out",
+    "holdOut": "Hold",
+    "cycle": "Round {{n}} of {{total}}"
+  },
+  "reps": {
+    "target": "How many?",
+    "tap": "Tap once per rep, or press the space bar"
+  },
+  "stretch": {
+    "step": "Stretch {{n}} of {{total}}",
+    "next": "Next",
+    "neck": "Neck rolls",
+    "neckSub": "Drop your chin, roll your head slowly from shoulder to shoulder.",
+    "shoulders": "Shoulder rolls",
+    "shouldersSub": "Lift your shoulders to your ears, roll them back and down.",
+    "reach": "Reach up",
+    "reachSub": "Hands together above your head, stretch as tall as you can.",
+    "fold": "Forward fold",
+    "foldSub": "Stand, bend forward from the hips, let your arms hang.",
+    "chest": "Chest opener",
+    "chestSub": "Hands behind your back, open your chest, look up a little."
+  },
+  "walk": {
+    "text": "Get up and walk, anywhere. Come back when the circle closes.",
+    "back": "I'm back"
+  },
+  "water": {
+    "text": "Fill a glass and drink it slowly, sip by sip.",
+    "done": "Done"
+  },
+  "totals": {
+    "title": "Since {{date}}",
+    "days": "{{n}} days tracked",
+    "perDay": "{{n}} a day on average",
+    "passed": "cravings passed",
+    "lost": "of life lost to cigarettes",
+    "saved": "of life kept by cravings passed",
+    "source": "Estimate: about 20 minutes of life per cigarette (UCL study, 2024). Counted for cigarettes only: no published figure exists for vapes or joints."
+  },
+  "memory": {
+    "title": "Ask the chat about it",
+    "offText": "Ember can keep your log in Mnemosyne's memory, so the chat can answer \"how am I doing?\". It writes one summary per finished day and one current status, in Ember's own vault.",
+    "turnOn": "Keep it in memory",
+    "turnOff": "Stop writing",
+    "writing": "Writing your log into memory…",
+    "walled": "Your log is in the {{vault}} vault. The chat reads it once you unlock it: open the Vault panel, pick {{vault}}, and press \"Unlock permanence\".",
+    "read": "The chat can answer from your log.",
+    "error": "The last write did not land: {{reason}}",
+    "retry": "Try again",
+    "lastWritten": "Last written at {{time}}",
+    "forget": "Forget what was written",
+    "forgetQ": "Forget {{n}} entries from memory?",
+    "forgetYes": "Forget them",
+    "forgetRefused": "Your {{n}} entries are still in memory, the vault refused to forget them: {{reason}}",
+    "forgotten": "The vault forgot {{n}} entries.",
+    "forgottenUnknown": "The vault forgot what Ember wrote."
+  },
+  "patterns": {
+    "title": "Your patterns",
+    "window": "last {{days}} days · {{n}} uses",
+    "peak": "Most uses fall between {{from}} and {{to}}: {{n}} of {{total}}.",
+    "week": "Weekdays: {{wd}} a day ({{wdDays}} days). Weekends: {{we}} a day ({{weDays}} days).",
+    "holdsTitle": "Time until the next use, after a craving passed (median):",
+    "times": "{{n}} times",
+    "note": "Links drawn from your own log, each with the count it rests on. They show when things happen, not why."
+  },
+  "camera": {
+    "title": "Camera watch",
+    "offText": "Ember can notice when you smoke at your desk and ask you. It looks for a rhythm: a hand at your mouth several times in a few minutes. It needs the gesture camera on (Settings › Gestures).",
+    "turnOn": "Watch with the camera",
+    "turnOff": "Stop watching",
+    "asking": "Asking Mnemosyne for the camera…",
+    "refused": "Mnemosyne said no: {{reason}}",
+    "cameraOff": "Watching, but the gesture camera is off. Turn it on in Settings › Gestures.",
+    "watching": "Watching. Nothing seen yet.",
+    "watchingLast": "Watching. Last hand at your mouth at {{time}} · {{n}} in the last 5 minutes.",
+    "threshold": "Ask after",
+    "accuracy": "{{yes}} of {{n}} questions were right",
+    "privacy": "Ember receives only the time and length of each moment your hand stays at your mouth. The camera, your face and your hands stay inside Mnemosyne OS. Ember keeps nothing unless you answer yes.",
+    "question": "Smoking?",
+    "since": "A rhythm since {{time}} ({{n}} times)",
+    "no": "No",
+    "pillOff": "Camera watch: off",
+    "pillAsking": "Camera: asking…",
+    "pillRefused": "Camera: refused",
+    "pillCameraOff": "Turn on Settings › Gestures",
+    "pillWatching": "Watching",
+    "pillWatchingN": "Watching · {{n}} at your mouth",
+    "virtual": "Take a virtual one instead"
+  }
+}

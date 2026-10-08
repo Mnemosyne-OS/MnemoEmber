@@ -1,0 +1,10 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ember">
+  <defs>
+    <linearGradient id="ember-grad" x1="6" y1="42" x2="42" y2="6" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <path d="M24 43C16 43 11 37.5 11 30.5C11 23 16.5 19 19 12.5C20.5 16 22.5 18 24.5 19C25 13.5 28 8.5 31 5C31.5 12 37 17.5 37 28.5C37 37 31.5 43 24 43Z" fill="url(#ember-grad)" fill-opacity="0.16" stroke="url(#ember-grad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 43C20.5 43 18 40.3 18 36.8C18 32.8 21 31 22.5 27.5C24.5 30 27.5 31.5 28.5 34.5C29.6 38 27.6 43 24 43Z" stroke="url(#ember-grad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,360 @@
+/*
+ * activities.css — the "Ride it out" sheet, its activities, and the totals.
+ * Same rules as app.css: host tokens for chrome, Ember accents only, motion
+ * starts with a gesture, reduced motion freezes it.
+ */
+
+/* ── Ride it out: the sheet ─────────────────────────────────────────────── */
+
+.em-ride { overflow: auto; }
+.em-ride-menu, .em-ride-activity, .em-ride-finished {
+  flex: 1;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.em-ride-finished { justify-content: center; }
+.em-ride-title { margin: 0; font-weight: normal; font-size: 39px; }
+.em-ride-for { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.em-ride-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-size: 15px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: #efe9e3;
+  cursor: pointer;
+}
+.em-ride-chip.em-on { border-color: currentColor; background: color-mix(in srgb, currentColor 16%, transparent); }
+
+/* The orbit: the usual way in the centre, six around it. Sized to the
+   smaller side of the window so it fills it without scrolling. */
+.em-orbit {
+  position: relative;
+  width: min(100%, calc(100vh - 220px), 640px);
+  min-width: 340px;
+  aspect-ratio: 1;
+}
+.em-orbit::before {
+  content: '';
+  position: absolute; inset: 14%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.em-orbit-sat, .em-orbit-centre {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  font: inherit;
+  text-align: center;
+  color: var(--em-calm);
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms, background 150ms, box-shadow 150ms;
+}
+.em-orbit-sat {
+  width: 24%; aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px;
+}
+.em-orbit-sat strong { color: #efe9e3; font-family: Georgia, serif; font-weight: normal; font-size: clamp(13px, 2.4vmin, 18px); line-height: 1.2; }
+.em-orbit-sat:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  border-color: color-mix(in srgb, currentColor 55%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+.em-orbit-centre {
+  left: 50%; top: 50%;
+  width: 40%; aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, currentColor 60%, transparent);
+  background: radial-gradient(circle, color-mix(in srgb, currentColor 22%, transparent), color-mix(in srgb, currentColor 6%, transparent) 70%);
+  box-shadow: 0 0 48px -8px color-mix(in srgb, currentColor 55%, transparent);
+  padding: 16px;
+}
+.em-orbit-centre strong { color: #efe9e3; font-family: Georgia, serif; font-weight: normal; font-size: clamp(20px, 4vmin, 31px); line-height: 1.15; }
+.em-orbit-centre span { color: rgba(239, 233, 227, 0.6); font-size: clamp(12px, 2vmin, 15px); }
+.em-orbit-centre:hover { transform: translate(-50%, -50%) scale(1.03); }
+.em-orbit-tag {
+  font-family: ui-monospace, Consolas, monospace; font-size: 11px !important;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: currentColor !important;
+}
+.em-orbit-virtual { color: var(--em-ember); }
+.em-orbit-sat:focus-visible, .em-orbit-centre:focus-visible, .em-ride-chip:focus-visible { outline: 2px solid var(--em-ember); outline-offset: 4px; }
+
+.em-ride-back { align-self: flex-start; color: rgba(239, 233, 227, 0.7); border-color: rgba(255, 255, 255, 0.14); }
+.em-ride-done-icon { margin-bottom: 8px; }
+
+/* ── Activities ─────────────────────────────────────────────────────────── */
+
+.em-act { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.em-act-title { font-size: 39px; }
+.em-act-text { margin: 0; max-width: 46ch; font-size: 18px; line-height: 1.5; color: rgba(239, 233, 227, 0.75); }
+.em-act-hint { font-family: Georgia, serif; font-size: 39px; min-height: 52px; color: var(--em-calm); }
+.em-act-meta {
+  font-family: ui-monospace, Consolas, monospace; font-size: 14px;
+  letter-spacing: 2px; text-transform: uppercase; color: rgba(239, 233, 227, 0.5);
+}
+.em-act-clock { font-family: Georgia, serif; font-size: 49px; font-variant-numeric: tabular-nums; }
+.em-act-row { display: flex; gap: 16px; align-items: center; }
+.em-act-done { padding: 16px 32px; font-size: 20px; color: #efe9e3; }
+.em-ring-calm { stroke: var(--em-calm); filter: drop-shadow(0 0 6px rgba(111, 211, 176, 0.6)); transition: stroke-dashoffset 250ms ease; }
+
+/* Box breathing: a dot travels the square, the core grows and shrinks. */
+.em-breath { position: relative; width: 240px; height: 240px; margin: 8px 0; }
+/* Positions in % of the box, so the same animation works at any size (the
+   far view makes the box a share of the window). */
+.em-breath-square { position: absolute; inset: 8.33%; border: 2px solid rgba(111, 211, 176, 0.25); border-radius: 10%; }
+.em-breath-dot {
+  position: absolute; width: 6.67%; height: 6.67%; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--em-calm); box-shadow: 0 0 16px 4px rgba(111, 211, 176, 0.6);
+  left: 8.33%; top: 91.67%;
+  animation: em-box-dot linear infinite;
+}
+@keyframes em-box-dot {
+  0% { left: 8.33%; top: 91.67%; }
+  25% { left: 8.33%; top: 8.33%; }
+  50% { left: 91.67%; top: 8.33%; }
+  75% { left: 91.67%; top: 91.67%; }
+  100% { left: 8.33%; top: 91.67%; }
+}
+.em-breath-core {
+  position: absolute; left: 50%; top: 50%; width: 58.33%; height: 58.33%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(111, 211, 176, 0.35), rgba(111, 211, 176, 0.05) 70%);
+  animation: em-box-core ease-in-out infinite;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+@keyframes em-box-core {
+  0% { transform: translate(-50%, -50%) scale(0.5); }
+  25% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1); }
+  75% { transform: translate(-50%, -50%) scale(0.5); }
+  100% { transform: translate(-50%, -50%) scale(0.5); }
+}
+.em-breath-count { position: absolute; inset: 0; display: grid; place-items: center; font-family: Georgia, serif; font-size: 49px; }
+
+.em-targets { display: flex; gap: 8px; }
+.em-rep, .em-walk {
+  position: relative; width: 200px; height: 200px; border-radius: 50%;
+  border: none;
+  background: radial-gradient(circle, rgba(111, 211, 176, 0.1), rgba(255, 255, 255, 0.01) 70%);
+  color: #efe9e3;
+}
+.em-rep { cursor: pointer; touch-action: manipulation; user-select: none; transition: transform 120ms ease; }
+.em-rep:active { transform: scale(0.96); }
+.em-rep > svg, .em-walk > svg { position: absolute; inset: 0; }
+.em-rep-num { position: absolute; inset: 0; display: grid; place-items: center; font-family: Georgia, serif; font-size: 61px; }
+.em-rep-num small { font-size: 20px; color: rgba(239, 233, 227, 0.5); }
+.em-walk-clock { position: absolute; inset: 0; display: grid; place-items: center; }
+
+.em-bar { width: min(420px, 100%); height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.em-bar-fill { height: 100%; background: var(--em-calm); border-radius: 999px; transition: width 250ms linear; }
+
+.em-glass {
+  position: relative; width: 110px; height: 160px; margin: 8px 0;
+  border: 3px solid rgba(239, 233, 227, 0.5); border-top: none; border-radius: 0 0 18px 18px;
+  overflow: hidden;
+}
+.em-glass-water {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 85%;
+  background: linear-gradient(180deg, rgba(120, 190, 240, 0.55), rgba(70, 140, 220, 0.75));
+  animation: em-sip 40s linear forwards;
+}
+@keyframes em-sip { from { height: 85%; } to { height: 6%; } }
+
+/* ── Totals ─────────────────────────────────────────────────────────────── */
+
+.em-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+.em-total {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  padding: 16px;
+  border-radius: 16px;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+.em-total-num { font-family: Georgia, serif; font-size: 31px; color: var(--em-text); line-height: 1.1; }
+.em-total-label { font-size: 13px; color: var(--em-muted); }
+.em-total-dot { width: 14px; height: 14px; border-width: 2.5px; margin: 4px 0; }
+
+.em-life { display: flex; flex-direction: column; gap: 8px; padding-top: 8px; border-top: 1px solid var(--em-edge); }
+.em-life-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.em-life-num { font-family: Georgia, serif; font-size: 31px; }
+.em-life-label { font-size: 15px; color: var(--em-muted); }
+.em-life-lost .em-life-num { color: var(--em-cigarette); }
+.em-life-saved .em-life-num { color: var(--em-calm); }
+.em-life-source { margin: 4px 0 0; font-size: 12px; color: var(--em-muted); line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .em-breath-dot, .em-breath-core, .em-glass-water { animation: none !important; }
+}
+
+/* ── Memory card ───────────────────────────────────────────────────────── */
+
+.em-memory-line { margin: 0; line-height: 1.55; color: var(--em-muted); max-width: 64ch; }
+.em-memory-good { color: var(--em-calm); }
+.em-memory-warn { color: var(--em-warn); }
+.em-memory-bad { color: var(--accent-red, #e0616f); }
+.em-memory-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.em-ghost-bad { color: var(--accent-red, #e0616f); border-color: color-mix(in srgb, var(--accent-red, #e0616f) 45%, transparent); }
+
+/* ── Patterns ──────────────────────────────────────────────────────────── */
+
+.em-hours { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; height: 72px; align-items: end; }
+.em-hour { height: 100%; display: flex; align-items: flex-end; }
+.em-hour-bar { width: 100%; min-height: 2px; border-radius: 3px; background: color-mix(in srgb, var(--em-text) 22%, transparent); }
+.em-hour-peak { background: var(--em-cigarette); box-shadow: 0 0 10px -2px var(--em-cigarette); }
+.em-hours-axis { display: flex; justify-content: space-between; font-family: ui-monospace, Consolas, monospace; font-size: 11px; color: var(--em-muted); }
+.em-patterns li { color: var(--em-text); }
+.em-patterns-holds { flex-wrap: wrap; gap: 8px; }
+.em-patterns-holds > span:first-child { color: var(--em-muted); width: 100%; }
+.em-patterns-holds small { color: var(--em-muted); }
+
+/* ── Camera watch ──────────────────────────────────────────────────────── */
+
+.em-threshold { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.em-threshold-chip { color: var(--em-text); min-width: 40px; justify-content: center; }
+.em-alert {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 16px 20px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--em-ember) 60%, transparent);
+  background: color-mix(in srgb, var(--em-ember) 14%, transparent);
+  box-shadow: 0 0 32px -8px color-mix(in srgb, var(--em-ember) 55%, transparent);
+}
+.em-alert-q { display: flex; flex-direction: column; gap: 4px; }
+.em-alert-q strong { font-weight: normal; font-size: 25px; }
+.em-alert-q span { font-size: 13px; color: var(--em-muted); }
+.em-alert-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+/* Far view: the question takes the whole window, over a dimmed dial, so it
+   is read from across the board and nothing overlaps it. */
+.em-alert-big {
+  position: absolute; inset: 0; z-index: 3;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5cqmin; padding: 6cqmin;
+  border-radius: 0; border: none; box-shadow: none;
+  text-align: center;
+  background: color-mix(in srgb, var(--em-void) 80%, transparent);
+  backdrop-filter: blur(6px);
+}
+.em-alert-big .em-alert-q { align-items: center; gap: 2cqmin; }
+.em-alert-big .em-alert-q strong { font-size: 13cqmin; color: var(--em-ember); }
+.em-alert-big .em-alert-q span { font-size: 4.5cqmin; }
+.em-alert-big .em-alert-actions { justify-content: center; gap: 3cqmin; }
+.em-alert-big .em-pick-btn, .em-alert-big .em-ghost { font-size: 6cqmin; padding: 2.5cqmin 5cqmin; border-width: 0.4cqmin; }
+.em-root-far { position: relative; }
+
+/* ── Camera pill (header and far view) ─────────────────────────────────── */
+
+.em-top-actions { display: flex; align-items: center; gap: 8px; }
+.em-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--em-edge);
+  background: var(--em-glass);
+  color: var(--em-muted);
+  cursor: pointer;
+}
+.em-pill:disabled { cursor: default; }
+.em-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.em-pill-off { color: var(--em-muted); }
+.em-pill-wait { color: var(--em-warn); border-color: color-mix(in srgb, var(--em-warn) 45%, transparent); }
+.em-pill-bad { color: var(--accent-red, #e0616f); border-color: color-mix(in srgb, var(--accent-red, #e0616f) 45%, transparent); }
+.em-pill-on { color: var(--em-calm); border-color: color-mix(in srgb, var(--em-calm) 45%, transparent); }
+.em-pill-on .em-pill-dot { box-shadow: 0 0 8px 2px color-mix(in srgb, var(--em-calm) 60%, transparent); }
+.em-far-pill { position: absolute; top: 3cqmin; right: 3cqmin; z-index: 2; }
+.em-pill-big { font-size: 4cqmin; padding: 1.5cqmin 3cqmin; gap: 1.5cqmin; border-width: 0.3cqmin; }
+.em-pill-big .em-pill-dot { width: 2.2cqmin; height: 2.2cqmin; }
+
+.em-alert-virtual {
+  flex-basis: 100%;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: inherit; font-size: 15px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--em-calm) 60%, transparent);
+  background: color-mix(in srgb, var(--em-calm) 16%, transparent);
+  color: var(--em-text);
+  cursor: pointer;
+}
+.em-alert-virtual:hover { background: color-mix(in srgb, var(--em-calm) 26%, transparent); }
+.em-alert-big .em-alert-virtual { flex-basis: auto; font-size: 5.5cqmin; padding: 2.5cqmin 6cqmin; border-width: 0.4cqmin; }
+
+/* ── The virtual one in the far view: every control sized to the window ─── */
+
+.em-scene-far { container-type: size; }
+.em-scene-far .em-scene-close { font-size: 3.5cqmin; padding: 1.5cqmin 3cqmin; top: 3cqmin; right: 3cqmin; }
+.em-scene-far .em-scene-controls { gap: 1.5cqmin; padding: 0 4cqmin 5cqmin; }
+.em-scene-far .em-scene-puffs { font-size: 3cqmin; }
+.em-scene-far .em-scene-hint { font-size: 7.5cqmin; min-height: 10cqmin; }
+.em-scene-far .em-hold { width: 34cqmin; height: 34cqmin; margin-top: 1cqmin; }
+.em-scene-far .em-hold > svg { width: 100%; height: 100%; }
+.em-scene-far .em-hold-icon svg { width: 9cqmin; height: 9cqmin; }
+.em-scene-far .em-scene-keyhint { font-size: 2.8cqmin; }
+.em-scene-far .em-scene-done { font-size: 4.5cqmin; padding: 2cqmin 5cqmin; }
+.em-scene-far .em-scene-choose h2 { font-size: 8cqmin; }
+.em-scene-far .em-choose-card { width: 26cqmin; height: 26cqmin; font-size: 4cqmin; gap: 2cqmin; }
+.em-scene-far .em-choose-card svg { width: 9cqmin; height: 9cqmin; }
+.em-scene-far .em-finished-title { font-size: 12cqmin; }
+.em-scene-far .em-finished-sub { font-size: 4cqmin; }
+.em-scene-far .em-scene-finished .em-btn { font-size: 4.5cqmin; padding: 2cqmin 5cqmin; }
+.em-scene-far .em-scene-finished { bottom: 8cqmin; gap: 2cqmin; }
+
+/* The object must stay the focus far away: beside the controls when the
+   window is wide, above them (at least half the height) when it is tall. */
+.em-scene-far .em-scene-canvas { min-height: 50cqh; }
+.em-scene-far .em-hold { width: 26cqmin; height: 26cqmin; }
+.em-scene-far .em-scene-hint { font-size: 6cqmin; min-height: 8cqmin; }
+@media (min-aspect-ratio: 5/4) {
+  .em-scene-far { flex-direction: row; align-items: center; }
+  /* width:auto + min-width:0, or the canvas keeps its 100% and its pixel
+     width as a minimum and pushes the controls off the window. */
+  .em-scene-far .em-scene-canvas { flex: 1.3 1 0; width: auto; min-width: 0; height: 100%; min-height: 0; }
+  .em-scene-far .em-scene-controls { flex: 1; padding: 0 4cqmin; justify-content: center; }
+}
+
+/* ── Ride it out in the far view: everything a share of the window ──────── */
+
+.em-ride-far { container-type: size; overflow: hidden; }
+.em-ride-far .em-scene-close { font-size: 3.5cqmin; padding: 1.5cqmin 3cqmin; top: 3cqmin; right: 3cqmin; }
+.em-ride-far .em-ride-menu,
+.em-ride-far .em-ride-activity,
+.em-ride-far .em-ride-finished { max-width: none; padding: 6cqmin 4cqmin 4cqmin; gap: 2.5cqmin; justify-content: center; }
+.em-ride-far .em-ride-title { font-size: 7cqmin; }
+.em-ride-far .em-ride-chip { font-size: 3.5cqmin; padding: 1.2cqmin 2.5cqmin; gap: 1.2cqmin; }
+.em-ride-far .em-ride-chip svg { width: 3.5cqmin; height: 3.5cqmin; }
+.em-ride-far .em-ride-for .em-muted { font-size: 3.5cqmin; }
+.em-ride-far .em-orbit { width: 72cqmin; min-width: 0; }
+.em-ride-far .em-orbit-sat strong { font-size: 3cqmin; }
+.em-ride-far .em-orbit-sat svg { width: 7cqmin; height: 7cqmin; }
+.em-ride-far .em-orbit-centre strong { font-size: 5cqmin; }
+.em-ride-far .em-orbit-centre span { font-size: 2.6cqmin; }
+.em-ride-far .em-orbit-centre svg { width: 12cqmin; height: 12cqmin; }
+.em-ride-far .em-orbit-tag { font-size: 2.2cqmin !important; }
+.em-ride-far .em-ride-back { font-size: 3.2cqmin; padding: 1.2cqmin 2.5cqmin; }
+.em-ride-far .em-act { gap: 2.5cqmin; }
+.em-ride-far .em-act-title { font-size: 7cqmin; }
+.em-ride-far .em-act-text { font-size: 3.6cqmin; max-width: 80cqmin; }
+.em-ride-far .em-act-hint { font-size: 7cqmin; min-height: 9cqmin; }
+.em-ride-far .em-act-meta { font-size: 2.8cqmin; }
+.em-ride-far .em-act-clock { font-size: 9cqmin; }
+.em-ride-far .em-act-done, .em-ride-far .em-act-row .em-btn, .em-ride-far .em-act-row .em-ghost { font-size: 4cqmin; padding: 2cqmin 4.5cqmin; }
+.em-ride-far .em-breath { width: 42cqmin; height: 42cqmin; }
+.em-ride-far .em-breath-count { font-size: 10cqmin; }
+.em-ride-far .em-rep, .em-ride-far .em-walk { width: 40cqmin; height: 40cqmin; }
+.em-ride-far .em-rep > svg, .em-ride-far .em-walk > svg { width: 100%; height: 100%; }
+.em-ride-far .em-rep-num { font-size: 12cqmin; }
+.em-ride-far .em-rep-num small { font-size: 4cqmin; }
+.em-ride-far .em-targets .em-ride-chip { min-width: 9cqmin; justify-content: center; }
+.em-ride-far .em-bar { width: 70cqmin; height: 1.5cqmin; }
+.em-ride-far .em-glass { width: 20cqmin; height: 30cqmin; border-width: 0.6cqmin; }
+.em-ride-far .em-ride-done-icon svg { width: 14cqmin; height: 14cqmin; }
+.em-ride-far .em-finished-title { font-size: 11cqmin; }
+.em-ride-far .em-finished-sub { font-size: 4cqmin; }
+.em-ride-far .em-ride-finished .em-btn { font-size: 4.5cqmin; padding: 2cqmin 5cqmin; }

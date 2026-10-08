@@ -1,0 +1,40 @@
+{
+  "name": "@mnemosyne-plugins/mnemo-ember",
+  "displayName": "Ember",
+  "version": "0.1.0",
+  "vendor": "Mnemosyne Labs",
+  "license": "MIT",
+  "category": "Productivity",
+  "icon": "icon.svg",
+  "description": "Log each cigarette, vape or joint in one tap, see your day on a clock, and ride out a craving with a virtual one, a breathing exercise or a few push-ups. The log lives on your machine; the chat can read it once you let it.",
+  "descriptionI18n": {
+    "en": "Log each cigarette, vape or joint in one tap, see your day on a clock, and ride out a craving with a virtual one, a breathing exercise or a few push-ups. The log lives on your machine; the chat can read it once you let it."
+  },
+  "keywords": [
+    "habits",
+    "smoking",
+    "vape",
+    "breathing",
+    "tracker",
+    "health"
+  ],
+  "permissions": [
+    "vault:write",
+    "camera:observe"
+  ],
+  "repository": "https://github.com/Mnemosyne-OS/MnemoEmber",
+  "updateStrategy": "git",
+  "entrypoints": {
+    "renderer": "index.html"
+  },
+  "widgets": [
+    {
+      "id": "mnemo-ember-main",
+      "icon": "🔥",
+      "name": "Ember",
+      "route": "index.html",
+      "defaultWidth": 820,
+      "defaultHeight": 760
+    }
+  ]
+}
